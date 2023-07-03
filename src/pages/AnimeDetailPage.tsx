@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { request } from '../services/api';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {
   ContainerDetail,
   AnimeCardDetail,
@@ -9,7 +9,6 @@ import {
   CollectionInputWrapper,
   CollectionCard,
 } from '../styles/components';
-import { Link } from 'react-router-dom';
 
 interface AnimeDetail {
   id: number;
@@ -76,7 +75,10 @@ const AnimeDetailPage = () => {
   }, [id]);
 
   const handleAnimeSelect = (anime: AnimeDetail) => {
-    setSelectedAnime((prevSelectedAnime) => [...prevSelectedAnime, anime]);
+    const isAnimeSelected = selectedAnime.some((selected) => selected.id === anime.id);
+    if (!isAnimeSelected) {
+      setSelectedAnime((prevSelectedAnime) => [...prevSelectedAnime, anime]);
+    }
   };
 
   const handleAnimeDeselect = (anime: AnimeDetail) => {
@@ -107,6 +109,8 @@ const AnimeDetailPage = () => {
 
     setSelectedAnime([]);
     setCollectionName('');
+
+    window.location.href = '/collection';
   };
 
   if (!animeDetail) {
@@ -119,11 +123,7 @@ const AnimeDetailPage = () => {
           height: '100vh',
         }}
       >
-        <div
-          style={{ fontSize: '24px', fontWeight: 'bold', color: 'gray' }}
-        >
-          Loading...
-        </div>
+        <div style={{ fontSize: '24px', fontWeight: 'bold', color: 'gray' }}>Loading...</div>
       </div>
     );
   }
@@ -151,8 +151,11 @@ const AnimeDetailPage = () => {
           <p>Episodes: {episodes}</p>
           <p>Genres: {genres.join(', ')}</p>
           <p>Rating: {averageScore}</p>
-          <button onClick={() => handleAnimeSelect(animeDetail)}>
-            Add to Collection
+          <button
+            onClick={() => handleAnimeSelect(animeDetail)}
+            disabled={selectedAnime.some((selected) => selected.id === animeDetail.id)}
+          >
+            Add to Collection 1
           </button>
         </AnimeCardDetail>
       </ContainerDetail>
@@ -164,9 +167,7 @@ const AnimeDetailPage = () => {
               <SelectedAnimeCard key={selected.id}>
                 <img src={selected.coverImage.large} alt={selected.title.romaji} />
                 <h3>{selected.title.romaji}</h3>
-                <button onClick={() => handleAnimeDeselect(selected)}>
-                  Deselect
-                </button>
+                <button onClick={() => handleAnimeDeselect(selected)}>Deselect</button>
               </SelectedAnimeCard>
             ))}
           </Container>
@@ -178,7 +179,7 @@ const AnimeDetailPage = () => {
               onChange={handleCollectionNameChange}
             />
             <button onClick={() => handleModalSubmit(selectedAnime, collectionName)}>
-              Add to Collection
+              Add to Collection 2
             </button>
           </CollectionInputWrapper>
         </div>
