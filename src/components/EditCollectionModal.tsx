@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { Collection, saveCollections } from '../services/storage';
+import { Collection } from '../services/storage';
 
 interface EditCollectionModalProps {
   collectionName: string;
@@ -25,15 +25,6 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
     if (newName.trim() !== '') {
       editCollection(collectionName, newName);
       closeModal();
-
-      const updatedCollections = collections.map((collection) => {
-        if (collection.name === collectionName) {
-          return { ...collection, name: newName };
-        }
-        return collection;
-      });
-
-      saveCollections(updatedCollections);
     }
   };
 

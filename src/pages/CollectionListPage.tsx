@@ -40,7 +40,15 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({ removeCollectio
   };
 
   const handleEditCollection = (collectionName: string, newName: string) => {
-    console.log(`Edit collection: ${collectionName} -> ${newName}`);
+    const updatedCollections = collections.map(collection => {
+      if (collection.name === collectionName) {
+        return { ...collection, name: newName };
+      }
+      return collection;
+    });
+
+    setCollections(updatedCollections);
+    saveCollections(updatedCollections);
   };
 
   return (
@@ -48,20 +56,22 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({ removeCollectio
       <h1 style={{ textAlign: 'center' }}>
         <Link to="/">Collection List</Link>
       </h1>
-      <Container>
-        {collections.length > 0 ? (
-          <div>
-            {collections.map((collection) => (
+      {collections.length > 0 && (
+        <div>
+          <Container>
+            {collections.map(collection => (
               <CollectionCard key={collection.name}>
                 <Link to={`/collection/${collection.name}`}>
                   <h3>{collection.name}</h3>
+                  <ul>
+                    {collection.animeList.map(anime => (
+                      <li key={anime.id}>
+                        <img src={anime.coverImage.large} alt={anime.title.romaji} />
+                        <h3>{anime.title.romaji}</h3>
+                      </li>
+                    ))}
+                  </ul>
                 </Link>
-                {collection.animeList.map((anime) => (
-                  <div key={anime.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <img src={anime.coverImage.large} alt={anime.title.romaji} style={{ width: '200px', height: '200px', objectFit: 'cover' }} />
-                    <h3 style={{ textAlign: 'center' }}>{anime.title.romaji}</h3>
-                  </div>
-                ))}
                 <ButtonCollections onClick={() => handleRemoveCollection(collection.name)}>
                   Remove
                 </ButtonCollections>
@@ -70,19 +80,17 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({ removeCollectio
                 </ButtonCollections>
               </CollectionCard>
             ))}
-          </div>
-        ) : (
-          <NoCollections>No collections found.</NoCollections>
-        )}
-        {editModalOpen && (
-          <EditCollectionModal
-            collectionName={editCollectionName}
-            editCollection={handleEditCollection}
-            closeModal={handleCloseEditModal}
-            collections={collections}
-          />
-        )}
-      </Container>
+            {editModalOpen && (
+              <EditCollectionModal
+                collectionName={editCollectionName}
+                editCollection={handleEditCollection}
+                closeModal={handleCloseEditModal}
+                collections={collections}
+              />
+            )}
+          </Container>
+        </div>
+      )}
     </div>
   );
 };
