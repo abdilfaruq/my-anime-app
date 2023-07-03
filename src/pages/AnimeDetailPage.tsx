@@ -155,7 +155,7 @@ const AnimeDetailPage = () => {
             onClick={() => handleAnimeSelect(animeDetail)}
             disabled={selectedAnime.some((selected) => selected.id === animeDetail.id)}
           >
-            Add to Collection 1
+            Add to Collection
           </button>
         </AnimeCardDetail>
       </ContainerDetail>
@@ -179,7 +179,7 @@ const AnimeDetailPage = () => {
               onChange={handleCollectionNameChange}
             />
             <button onClick={() => handleModalSubmit(selectedAnime, collectionName)}>
-              Add to Collection 2
+              Add to Collection
             </button>
           </CollectionInputWrapper>
         </div>
