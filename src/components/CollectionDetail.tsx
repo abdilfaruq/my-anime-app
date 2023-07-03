@@ -7,7 +7,7 @@ interface CollectionDetailProps {
     key: string;
     title: string;
     coverImage: string;
-    description: string; // Add the description prop
+    description: string;
   }[];
 }
 

@@ -17,7 +17,6 @@ function App() {
   };
 
   const openEditModal = (collectionName: string) => {
-    // Implement your logic for opening the edit modal
     console.log(`Open edit modal for collection: ${collectionName}`);
   };
 

@@ -95,17 +95,14 @@ const AnimeDetailPage = () => {
       animeList: selectedAnime,
     };
 
-    // Mendapatkan data koleksi yang ada di localStorage (jika ada)
     const storedCollections = localStorage.getItem('collections');
     let updatedCollections: Collection[] = [];
     if (storedCollections) {
       updatedCollections = JSON.parse(storedCollections);
     }
 
-    // Menambahkan koleksi baru ke dalam daftar koleksi
     updatedCollections.push(newCollection);
 
-    // Menyimpan data koleksi yang diperbarui ke localStorage
     localStorage.setItem('collections', JSON.stringify(updatedCollections));
 
     setSelectedAnime([]);

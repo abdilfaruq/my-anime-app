@@ -26,7 +26,6 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
       editCollection(collectionName, newName);
       closeModal();
 
-      // Perbarui koleksi dengan nama baru
       const updatedCollections = collections.map((collection) => {
         if (collection.name === collectionName) {
           return { ...collection, name: newName };
@@ -34,7 +33,7 @@ const EditCollectionModal: React.FC<EditCollectionModalProps> = ({
         return collection;
       });
 
-      saveCollections(updatedCollections); // Menyimpan koleksi ke localStorage setelah berhasil mengedit
+      saveCollections(updatedCollections);
     }
   };
 

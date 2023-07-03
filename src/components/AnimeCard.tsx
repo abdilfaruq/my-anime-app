@@ -11,7 +11,7 @@ const AnimeCard: React.FC<AnimeCardProps> = ({ key, title, coverImage, descripti
   return (
     <div>
       <img src={coverImage} alt={title} />
-      <h2>{title}</h2>
+        <h2>{title}</h2>
       <p>{description}</p>
     </div>
   );

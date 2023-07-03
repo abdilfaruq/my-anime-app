@@ -33,7 +33,6 @@ const CollectionDetailPage = () => {
 
   useEffect(() => {
     const fetchCollectionDetail = () => {
-      // Retrieve collectionDetail from localStorage based on the provided id
       const collectionDetailData = localStorage.getItem(`collection_${id}`);
 
       if (collectionDetailData) {
@@ -63,7 +62,6 @@ const CollectionDetailPage = () => {
       animeList: updatedAnimeList,
     };
 
-    // Update collectionDetail in localStorage
     localStorage.setItem(`collection_${id}`, JSON.stringify(updatedCollectionDetail));
 
     setCollectionDetail(updatedCollectionDetail);
@@ -82,7 +80,6 @@ const CollectionDetailPage = () => {
       return;
     }
 
-    // Check for uniqueness of collection name
     const isUnique = checkCollectionNameUniqueness(editedCollectionName);
 
     if (!isUnique) {
@@ -95,7 +92,6 @@ const CollectionDetailPage = () => {
       collectionName: editedCollectionName,
     };
 
-    // Update collectionDetail in localStorage
     localStorage.setItem(`collection_${id}`, JSON.stringify(updatedCollectionDetail));
 
     setCollectionDetail(updatedCollectionDetail);
@@ -103,7 +99,6 @@ const CollectionDetailPage = () => {
   };
 
   const checkCollectionNameUniqueness = (name: string) => {
-    // Check if the new name is already used by another collection
     const collections = Object.keys(localStorage)
       .filter((key) => key.startsWith('collection_'))
       .map((key) => localStorage.getItem(key))
